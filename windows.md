@@ -5,15 +5,18 @@
 Show hidden files and file extensions in Windows Explorer
 Right-click sidebar -> Taskbar settings -> Disable Widgets, Search, Task View
 
-## SSH 
-Install from Apps > Optional Features
-"C:\ProgramData\ssh" is hidden but has SSH server config
-Set default shell to WSL2:
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\WINDOWS\System32\bash.exe" -PropertyType String -Force
-Use to set default distro:
-wsl --set-default DISTRO
-View logs from Event Viewer > Applications & Services Logs > OpenSSH
+## SSH
 
+Install from Apps > Optional Features
+`C:\ProgramData\ssh` is hidden but has SSH server config
+
+Set default shell to WSL2:
+`New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\WINDOWS\System32\bash.exe" -PropertyType String -Force`
+
+Use to set default distro:
+`wsl --set-default DISTRO`
+
+View logs from Event Viewer > Applications & Services Logs > OpenSSH
 
 ## Apple UK Keyboard ISO
 
@@ -27,12 +30,14 @@ View logs from Event Viewer > Applications & Services Logs > OpenSSH
 2. Checkout github repos
 
 ## Desktop
+
 Use English US Keyboard for SHIFT+3 (#) key
 Win + <- or ->: Snap window to left or right of screen
 
 ## WSL
 
 List distros:
+
 - `wsl -l` list distros
 - `wsl --set-default <distro name>`
 - `wsl --unregister <distro name>`
@@ -40,7 +45,8 @@ List distros:
 ## Bitwarden
 
 Use Bitwarden CLI from Ubuntu:
-```
+
+```sh
 bw unlock
 ...  
 export BW_SESSION="<somekey>"

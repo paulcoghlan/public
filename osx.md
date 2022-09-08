@@ -75,7 +75,7 @@ sudo diskutil unmountDisk /dev/diskN
 sudo dd if=<from diskutil> of=xxx  bs=16m
 ```
 
-pbcopy/pbpaste copies to/from clipboard: 
+pbcopy/pbpaste copies to/from clipboard
 
 ```sh
 echo "ohai im in ur clipboardz" | pbcopy
@@ -101,6 +101,7 @@ Uninstall brew package:
 `brew uninstall xxx`
 
 JEnv installation:
+
 ```sh
 brew install jenv
 jenv add /Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
@@ -190,17 +191,17 @@ DNS: `chrome://net-internals/#dns`
 
 ## OBS - Virtual Audio
 
-1. Install https://github.com/ExistentialAudio/BlackHole:
+1. Install [https://github.com/ExistentialAudio/BlackHole]:
 `brew install blackhole-2ch`
 
 2. Enable monitoring from OBS to blackhole: `Preferences > Audio > Advanced`
 Select Blackhole 2ch
 
-3. Click on Audio Input Capture Cog 
-   3.1 Select Advanced Audio Properties 
+3. Click on Audio Input Capture Cog
+   3.1 Select Advanced Audio Properties
    3.2 Under Audio Monitoring (scroll to right if necessary) select Monitor Only
    3.3 In Google Meeting settings, select Blackhole
-   3.4 Adjust Sync Offset in Advanced Audio Properties 
+   3.4 Adjust Sync Offset in Advanced Audio Properties
 
 ## Github
 

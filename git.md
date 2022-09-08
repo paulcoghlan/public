@@ -74,13 +74,9 @@ Force move tip of branch: `git branch -f <branch> <commit-sha>`
 
 ## Digging deeper
 
-*commit* = tree + parent + metadata
-
-*tree* = tree + blob
-
-*working tree* = what is on your SSD
-
-*index* = 
+- working tree = what is on your SSD
+- index/staging area = `git add/rm` commands "stages" files in the index (represented in `.git/`)
+- repository = `git commit` command moves staged file changes into repository
 
 `reset` - hard, soft or mixed (default)
 
@@ -133,6 +129,10 @@ Fetching a remote branch:
 ## Even Deeper
 
 Given `echo 'Hello, world!' > greeting.txt`:
+
+- *blob* = hash (see `git hash-object <file>`)
+- *tree* = tree + blob (e.g. `git ls-tree <commit>`)
+- *commit* = tree + parent + metadata
 
 - `git hash-object greeting.txt` - return hash
 - `git cat-file blob af5626b` - return blob contents

@@ -1,6 +1,6 @@
 # Grafana
 
-- Front/backend application intefacing to TSDB 
+- Front/backend application intefacing to TSDB
 - Graphite, InflubDB
 
 ## TSDB

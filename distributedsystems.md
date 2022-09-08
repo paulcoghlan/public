@@ -307,9 +307,9 @@ Consider read/write ratios, e.g.:
 
 ## Proxy
 
-- Forward Proxy: Client -> Internet 
+- Forward Proxy: Client -> Internet
 - Reverse Proxy: Internet -> Server
-- TLS encryption: 
+- TLS encryption:
 
 ## TLS
 
