@@ -106,7 +106,7 @@ To parse a string representing an integer, use the `strconv.Atoi()` or `ParseInt
 
 ## Arrays
 
-Go treats arrays like any other basic/aggregate type and does copy by value when calling a function (might be inefficient for large arrays).
+Go treats arrays like any other basic/aggregate type and does *copy* by value when calling a function (might be inefficient for large arrays).
 
 ## Naming
 
@@ -115,6 +115,14 @@ Go treats arrays like any other basic/aggregate type and does copy by value when
 - Go doesn't provide automatic support for getters and setters. Don't put Get into name, but do put Set!
 - Use “camel case” when forming names by combining words; that is, interior capital letters are preferred over interior underscores.
 - One-method interfaces are named by the method name plus an `-er` suffix
+- The importer of a package will use the name to refer to its contents, so exported names in the package can use that fact to avoid repetition e.g.
+  in `bufio` package we use `Reader`, not `BufReader`, because users see it as `bufio.Reader`
+- Similarly, the function to make new instances of would normally be called `NewRing`,
+  but since `Ring` is the only type exported by the `ring` package, and since the package is called ring, it's called just `New`
+
+## Conditionals
+
+When an if statement doesn't flow into the next statement—that is, the body ends in break, continue, goto, or return — the unnecessary else is omitted.
 
 ## Formatting
 
@@ -237,17 +245,25 @@ func (a ByAge) Swap(i, j int)      {
 ## Slices
 
 - Wrap arrays, used more than arrays
-- Slices hold references to an underlying array, and if you assign one slice to another, both refer to the same array
+- Slices *hold references to an underlying array*, and if you assign one slice to another, both refer to the same array
 - `func append(slice []T, elements ...T) []T` - append the elements to the end of the slice and return the result.
   Note slice argument isn't updated so you need to assign the result of the function
 - Declared using empty brackets vs. Arrays which have capacity part of type
 - `[:2]` is first two items inclusive
 - `[2:]` is third items onwards
+- The size of an array is part of its type. The types [10]int and [20]int are distinct.
 
 ## Structs
 
 The name of a struct field is exported if it begins with a capital letter; this is Go’s main access control mechanism.
 A struct type may contain a mixture of exported and unexported fields.
+
+If a type exists only to implement an interface and will never have exported methods other than the interface, do not export the type itself
+
+Exporting just the interface makes it clear the value has no interesting behavior beyond what is described in the interface.
+It also avoids the need to repeat the documentation on every instance of a common method. The constructor should return an interface value
+rather than the implementing type. e.g, both `crc32.NewIEEE` and `adler32.New` return the interface type `hash.Hash32`
+
 
 ### Embedding Structs
 
