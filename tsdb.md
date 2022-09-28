@@ -14,6 +14,15 @@ See [https://grafana.com/docs/grafana/latest/basics/timeseries/]
 - Measurements filtered using tags or labels
 - Labels are key/value pairs for identifying Dimensions
 
+## Prometheus
+
+- Heritage: Soundcloud engineers (ex-Google)
+- Pull-based HTTP request to collectors
+- Built-in service discovery
+- Alerts 
+- Stores float64 metric_name{ Key, Value } pairs
+- PromQL
+
 ## Collectors
 
 - collectd [https://collectd.org/]
