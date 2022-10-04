@@ -10,6 +10,8 @@ Undo last commit: `git reset --hard HEAD^`
 
 Rebase or Squash last 4 commits: `git rebase -i HEAD~4`
 
+Stage partial commits: `git add -p`
+
 Sync with upstream fork, avoid merge commits:
 
 ```sh

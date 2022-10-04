@@ -21,3 +21,14 @@ Containers -> Pods -> [Optionally: ReplicaSets (n pods)] -> Deployments -> Servi
 
 - L4 is TCP/UDP - only knows no. connections and response times
 - L7 is HTTP - knows about URLs, content type, cookies
+
+### CLI Samples
+
+- clusters: `kubectl cluster-info`
+- namespaces find: `kubectl get namespaces | grep "my-namespace"`
+- use namespace `kubectl config set-context --current --namespace "my-namespace"`
+- get pods to find: `kubectl get pods`
+- port forward using proxy: `kubectl port-forward svc/cloudsql-proxy -n <service> <local_port>:<remote_port>`
+
+
+

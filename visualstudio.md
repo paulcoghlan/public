@@ -1,5 +1,7 @@
 # Visual Studio
 
+See [https://code.visualstudio.com/docs/getstarted/keybindings]
+
 ## Meta
 
 ```sh
@@ -66,6 +68,8 @@ ALT+CMD+]
 
 ```
 
+Go: Generate Interface Stubs
+
 ## Search
 
 ```sh
@@ -86,7 +90,7 @@ N  - previous search result
 
 ## markdown
 
-CMD+K+V - Show preview window next to markdown
+CMD+K + V - Show preview window next to markdown
 
 ## Extensions
 
