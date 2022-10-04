@@ -15,7 +15,7 @@ F12 -           Goto Definition
 CTRL+-          Go back
 
 ALT+R           See Recent Projects
-ALT+P           Open File, then '?' to see suggested commands
+CMD+P           Open File, then '?' to see suggested commands
 
 ## Windows
 
@@ -37,6 +37,9 @@ SHFT+CMD+]      Next Terminal
 CTRL+CMD+UP     Increase Terminal height
 CTRL+CMD+DOWN   Decrease Terminal height
 CMD+CLICK       Navigate to source from Terminal output
+
+CMD+E           Focus on Editor
+CMD+U           Focus on Debug/Terminal
 ```
 
 ## Editing
@@ -94,4 +97,6 @@ CMD+K + V - Show preview window next to markdown
 
 ## Extensions
 
+CTRL+SHIFT+G - Show/hide Git
+ALT+G   - Git Commit
 CMD+F10 - Open Regexp Tool
