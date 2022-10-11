@@ -51,6 +51,8 @@ Clean untracked directories & files: `git clean -dfx` / dry-run `git clean -ndfx
 
 Move tag (e.g. need to not be on branch): `git branch -f <tag> <commit_id>`
 
+Move HEAD to a branch tip: `git reset --hard <branch>`
+
 Save where I am before I do complicated stuff: `git checkout -b backup`
 
 Remove files from a commit:
@@ -81,7 +83,7 @@ Force move tip of branch: `git branch -f <branch> <commit-sha>`
 - repository = `git commit` command moves staged file changes into repository
 
 `reset` - hard, soft or mixed (default)
-
+´
 `git reset --hard 1.1` - file contents same as repo
 
 `git reset 1.1` - resets the index but not the working tree and reports what has not been updated
@@ -107,9 +109,9 @@ Fetching a remote branch:
 
 ### Reverting some directory in a branch
 
-1. Diff folder in branch: `git diff 6e8fab43..bea7535b -- afolder/`
+1. Diff folder in branch: `git diff main..<some_sha> -- afolder/`
 2. Generate revert commit from patch: `| git apply -R`
-3. Putting it together: `git diff 6e8fab43..bea7535b -- afolder/ | git apply -R`
+3. Putting it together: `git diff main´´..bea7535b -- afolder/ | git apply -R`
 
 ## Search commit messages
 

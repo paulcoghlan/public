@@ -1,48 +1,56 @@
 # Golang
 
-## Creating Modules
+## Modules
+
+Go commands run in Module-aware mode or `GOPATH` mode
+
+- Module-aware mode (default in Go 1.16+): go command uses `go.mod` files to find versioned dependencies, and it typically loads packages
+  out of the module cache (`GOPATH/pkg/mod`)
+- `GOPATH` mode: go command ignores modules; it looks in `vendor` directories and in `GOPATH` to find dependencies
+  (If `GOPATH` is not set, it defaults to `~/go`)
+
+### Vendoring
+
+Vendoring is used to allow interoperation with *older* versions of Go, or to ensure that all files used for a build are stored in a single file tree.
+
+`go mod vendor` command creates a `vendor` directory containing copies of all packages needed to build and test packages in the main module.
+
+### Creating Modules
 
 1. `mkdir paulcoghlan.com/hello`
 2. `go mod init paulcoghlan.com/hello` -> `go.mod` file created
 3. `go mod tidy` -> `go.sum` created and remote modules downloaded to `$GOPATH/pkg/mod`
 
-See https://go.dev/blog/using-go-modules
+See [https://go.dev/blog/using-go-modules]
 
 - Go programmers typically keep all their Go code in a single workspace
-- GOPATH environment variable specifies the location of your workspace
-
-CTRL+SHIFT+P - show type at cursor
-CTRL+TAB - show switcher
-SHIFT+ESC - hide window
-CMD+SHIFT+A - find action
-
-F1 - show docs
-ALT+F12 - show terminal
 
 ## CLI
 
 Use `./...` to wildcard sub directories:
-```
+
+```sh
 go test ./...
 
 staticcheck ./...
 ```
 
+### Test
+
+Test specific function: `go test -run  <function_name_regexp>`
+
 ## Lint
 
-Use `go vet` and/or https://staticcheck.io
-
-```
- go install honnef.co/go/tools/cmd/staticcheck@latest
-```
-
-Updated C with Garbage collection
+- `go vet` - built-in
+- [https://staticcheck.io] `go install honnef.co/go/tools/cmd/staticcheck@latest`
+- [https://github.com/golangci/golangci-lint]
 
 ## Types
 
 - Basic (bool, number, string)
   - float32 provides approximately 6 decimal digits of precision
-  - float64 provides about 15 digits
+  - float64 provides about 15 digits, so prefer using them
+    - Perform * and / before + and - for accuracy
   - `math.MaxInt` and `math.MinInt` are limits
   - strings are immutable
   - The built-in len function returns the number of bytes (not runes) in a string, and the index operation s[i] retrieves the i-th byte of string s
@@ -53,7 +61,7 @@ Updated C with Garbage collection
   - Slices point to an underlying array
 - Reference (pointers, slices, maps, channels≈)
 - Interface: note empty Interface type `interface{}`, can have any value assigned to it as no contracts specified
-
+- `==` and `!=` work on all basic types, pointers, channels and structs.  Use `reflect.DeepEqual()` for everything else
 
 ### Type conversions
 
@@ -68,7 +76,7 @@ if ok {
 }
 ```
 
-### Type checking
+### Type-checking
 
 Check types dynamically, eg. is `sw` a `stringwriter`:
 
@@ -98,11 +106,15 @@ switch x.(type) {
 A raw string literal is written `...`, using backquotes instead of double quotes. Within a raw string literal, no escape sequences are processed;
 the contents are taken literally
 
-Because strings are immutable, building up strings incrementally can involve a lot of allocation and copying. In such cases, it’s more efficient to
-use the `bytes.Buffer` type.
+Because strings are immutable, building up strings incrementally can involve a lot of allocation and copying. 
+In such cases, it’s more efficient to use the `bytes.Buffer` type.
 
 To convert an integer to a string, one option is to use `fmt.Sprintf()` or `strconv.Itoa()`
 To parse a string representing an integer, use the `strconv.Atoi()` or `ParseInt`/`ParseUint`
+
+Remember that the `bytes` package offers the same operations as the `strings` package can help avoid extra byte/string conversions.
+
+Substring operations may return string with same backing array. `strings.Clone()` returns a new string.
 
 ## Arrays
 
@@ -111,8 +123,10 @@ Go treats arrays like any other basic/aggregate type and does *copy* by value wh
 ## Naming
 
 - Uppercase names exported
-- Package names are single-word
-- Go doesn't provide automatic support for getters and setters. Don't put Get into name, but do put Set!
+- Package names are lowercase single-word
+  - Function names starting with an uppercase letter are exported: keep them to a minimum!
+  - Use aliases to avoid name conflicts
+- Go doesn't provide automatic support for getters and setters. *Don't* put `Get` into name, but *do* put `Set`!
 - Use “camel case” when forming names by combining words; that is, interior capital letters are preferred over interior underscores.
 - One-method interfaces are named by the method name plus an `-er` suffix
 - The importer of a package will use the name to refer to its contents, so exported names in the package can use that fact to avoid repetition e.g.
@@ -122,16 +136,16 @@ Go treats arrays like any other basic/aggregate type and does *copy* by value wh
 
 ## Conditionals
 
+Align happy-path with the left, so easiest to read.  Failure cases are aligned on the right!
+
 When an if statement doesn't flow into the next statement—that is, the body ends in break, continue, goto, or return — the unnecessary else is omitted.
 
 ## Formatting
 
-gofmt does all the formatting for you
+`gofmt` does all the formatting for you
 Uses tabs, not spaces
-Doc comments work best as complete sentence
-The first sentence should be a one-sentence summary that starts with the name being declared.
 
-In `a :=` declaration a variable v may appear even if it has already been declared, making it easy to use a single err value, for example, in a long if-else chain
+In `a :=` declaration a variable `v` may appear even if it has already been declared, making it easy to use a single err value, for example, in a long if-else chain
 
 ## Equality
 
@@ -202,17 +216,22 @@ from the heap.
 
 ### Package-level Variables
 
-Package level variables have the same lifetime as the program.
+During initialisation:
 
-Keeping unnecessary pointers to short-lived objects within long-lived objects, especially global variables, will prevent the garbage collector from reclaiming the short-lived objects.
+1. All the constant and variable declarations in the package are evaluated
+2. The `init()` functions are executed
+
+- Package level variables have the same lifetime as the program.
+  - Keeping unnecessary pointers to short-lived objects within long-lived objects, especially global variables, will prevent the garbage collector from reclaiming the short-lived objects.
+gety
 
 ## New
 
-new(T) allocates zeroed storage for a new item of type T and returns its address
-The zero value of each type may be used without further initialization as composite literal - an expression that creates a new instance each time it is evaluated
+`new(T)` allocates *zeroed* storage for a new item of type T and returns its address
+The *zero* value of each type may be used *without further initialization* as composite literal - an expression that creates a new instance each time it is evaluated
 It's OK to return the address of a local variable; the storage associated with the variable survives after the function returns
 
-- `make(T, size, capacity [optional])` serves a purpose different from `new(T)`. It creates slices, maps, and channels only, and it returns an initialized (not zeroed) value of type T (not *T)
+- `make(T, size, capacity [optional])` serves a purpose different from `new(T)`. It creates slices, maps, and channels only, and it returns an *initialized (not zeroed)* value of type `T` (not `*T`)
 
 ## Pointers
 
@@ -245,13 +264,19 @@ func (a ByAge) Swap(i, j int)      {
 ## Slices
 
 - Wrap arrays, used more than arrays
-- Slices *hold references to an underlying array*, and if you assign one slice to another, both refer to the same array
+- *Danger*: slices *hold references to an underlying array*, and if you assign one slice to another, both refer to the same array
+- `capacity` is the size of the underlying array
 - `func append(slice []T, elements ...T) []T` - append the elements to the end of the slice and return the result.
-  Note slice argument isn't updated so you need to assign the result of the function
+  - Slice argument isn't updated so you need to assign the result of the function
+  - `capacity` needs to be big enough or new array allocated (expensive for GC)
+  - append works on `nil` slices
+  - Danger: if the resulting slice has a length smaller than its capacity, append can mutate the original slice,
+    so you might want to `copy()` or use full slice expression
 - Declared using empty brackets vs. Arrays which have capacity part of type
 - `[:2]` is first two items inclusive
 - `[2:]` is third items onwards
-- The size of an array is part of its type. The types [10]int and [20]int are distinct.
+- The size of an array is part of its type. The types `[10]int` and `[20]int` are distinct
+- If you have a slice or pointers, set unused pointers to `nil` so they are GC-ed
 
 ## Structs
 
@@ -263,7 +288,6 @@ If a type exists only to implement an interface and will never have exported met
 Exporting just the interface makes it clear the value has no interesting behavior beyond what is described in the interface.
 It also avoids the need to repeat the documentation on every instance of a common method. The constructor should return an interface value
 rather than the implementing type. e.g, both `crc32.NewIEEE` and `adler32.New` return the interface type `hash.Hash32`
-
 
 ### Embedding Structs
 
@@ -287,6 +311,8 @@ Outer type can then use methods from inner type.
 Key can be of any type for which the equality operator is defined, such as integers, floating point and complex numbers, strings, pointers, interfaces (as long as the dynamic type supports equality), structs and arrays
 Need to use sync.Map for synchronised thread-safe access
 
+- `len(map)` is 0 if map is `nil` or empty
+
 ## Constants
 
 Enumerated constants are created using the `iota` enumerator
@@ -303,21 +329,24 @@ init is called after all the variable declarations in the package have evaluated
 
 ### Copying Instances of type T
 
-- It is safe to copy instances of type T if all methods are on T
-  - Calling methods makes a copy of the T instance
-  - If T has any *T pointer receivers them you should not copy instances of T
+- It is safe to copy instances of type `T` if all methods are on `T`
+  - Calling methods makes a copy of the `T` instance
+  - If `T` has any `*T` pointer receivers them you should not copy instances of `T`
     - Pointer methods will update original and copy instance with unpredictable results
-    - e.g. bytes.Buffer
+    - e.g. `bytes.Buffer`
 
 ## Interfaces
 
 - A type can implement multiple interfaces
 - Interfaces are satisified *implicitly*
-- Variables are transparently converted to pointers if a pointer method is
-invoked on a non-pointer.  However, if a value of type T does not possess all the methods that a *T pointer does, then as a result it might satisfy fewer interfaces.
-- "Like an envelope that wraps and conceals the letter it holds, an interface wraps and conceals the concrete type T and value that it holds. Only the methods revealed by the interface type may be called, even if the concrete type has others" - good for hiding
+- Decoupling: rely on abstraction instead of a concrete implementation - so implementation itself can be replaced with another - Liskov Substitution Principle, or the L in Robert C. Martin’s SOLID design principles
+- Hiding: "interface wraps and conceals the concrete type `T` and value that it holds. Only the methods revealed by the interface type may be called, even if the concrete type has others"
 - Empty Interface type `interface{}`, can have any value assigned to it as
 no contracts specified! e.g `fmt.Println()`
+  - In Go 1.18 use `any` instead of `interface{}`
+  - Avoid using empty interfaces unless there is a good case, e.g. marshaling or formatting
+- Variables are transparently converted to pointers if a pointer method is
+invoked on a non-pointer.  However, if a value of type `T` does not possess all the methods that a `*T` pointer does, then as a result it might satisfy fewer interfaces.
 
 - Interfaces have a *dynamic type* and a *dynamic value* both of which can change, e.g:
 
@@ -326,12 +355,14 @@ no contracts specified! e.g `fmt.Println()`
     w = os.Stdout               // type=*os.File,value=os.Stdout
     w = new(bytes.Buffer)       // type=*bytes.Buffer,value=bytes.Buffer{}
     w = nil                     // type=nil, value=nil 
-``` 
+```
 
 Two interface values are equal if:
 
 - Both are nil, or
 - Dynamic types are identical and their dynamic values are equal
+- There is a small performance overhead when calling a method through an interface:
+  - Requires a lookup to find the dynamic type an interface points to
 
 Hints:
 
@@ -346,6 +377,26 @@ v := any.(type) {
     }
 ```
 
+- Avoid polluting code with too many abstractions (like Java)
+- "The bigger the interface, the weaker the abstraction" Rob Pike
+  - Fine-grained abstractions like `io.Reader` and `io.Writer` are examples:
+
+```go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}
+```
+
+- Abstractions should be discovered, not created - only create when you need them
+- Expose `struct`/concrete implementations on *producer* side, and let *client* decide whether `interface` is necessary
+- "Be conservative in what you do, be liberal in what you accept from others" - Postel's law
+  - Accept `interfaces` not `structs`
+  - Return `structs`, not `interfaces`
+
 - Use `%T` to print out the dynamic type.
 - A nil interface value, is not the same as an interface value containing a pointer that happens to be nil.
   This means `if some-interface-value != nil` will be true, but the value can be nil!
@@ -354,20 +405,43 @@ v := any.(type) {
 ### Embedding Interfaces
 
 ```go
-// ReadWriter is the interface that combines the Reader and Writer interfaces.
+// ReadWriter is the interface that combines the Reader and Writer interfaces (see above)
+// so no method forwarding is necessary:
 type ReadWriter interface {
     Reader
     Writer
 }
 
-// Similar to this, but don't need to forward methods:
+// Similar to this, but subclassing means we need to forward methods:
 type ReadWriter struct {
     reader *Reader
     writer *Writer
 }
+
+func (rw *ReadWriter) Read(p []byte) (n int, err error) {
+    return rw.reader.Read(p)
+}
 ```
 
-When we embed a type, the methods of that type become methods of the outer type, but when they are invoked the receiver of the method is the inner type, not the outer one
+Embedding vs. Subclassing behave differently:
+
+- *embedding*, the receiver of `Foo` remains `X`
+
+```go
+type X struct {}
+func (x X) Foo() {}
+
+type Y interface { X }
+```
+
+- *subclassing*, the receiver of `Foo` becomes the subclass, `Y`
+
+```go
+type X struct {}
+func (x X) Foo() {}
+
+type Y struct { x X }
+```
 
 An expression may be assigned to an interface only if its type satisfies the interface.
 
@@ -441,6 +515,15 @@ func (s byLength) Less(i, j int) bool {
     return len(s[i]) < len(s[j])
 }
 ```
+
+A good use-case for [##Generics]
+
+## Generics
+
+Main uses:
+
+- Data structures: factor out the element type
+- Functions working with `slices`, `maps`, and `channels` of any type
 
 ## Goroutines
 
@@ -545,11 +628,9 @@ wg.Wait()
 
 ## Methods
 
-A method is just a function with a reciever argument.
-
-Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct.
-
-`Nil` is a valid receiver value!
+- A method is just a function with a receiver argument.
+- Methods can be defined for any named type (except a pointer or an interface); the receiver does not have to be a struct.
+- `Nil` is a valid receiver value!
 
 ### Embedding Methods
 
@@ -778,6 +859,12 @@ literal percent sign (no operand)
 - Parsing based on example `Mon Jan 2 15:04:05 MST 2006`
 - e.g. `t = time.Parse("3:04:05PM", s)`
 - Format: `t.Format("15:04:05")`
+
+## Godoc
+
+- Every exported element must be documented (structure, an interface, a function, etc)
+- The convention is to add a single-sentence comment ending with '.', starting with the name of the exported element
+- Packages should start the comment with a `// Package <package-name>` comment
 
 ## Tips
 
