@@ -5,7 +5,7 @@
 Show hidden files and file extensions in Windows Explorer
 Right-click sidebar -> Taskbar settings -> Disable Widgets, Search, Task View
 
-## SSH
+## SSH 
 
 Install from Apps > Optional Features
 `C:\ProgramData\ssh` is hidden but has SSH server config
@@ -17,6 +17,7 @@ Use to set default distro:
 `wsl --set-default DISTRO`
 
 View logs from Event Viewer > Applications & Services Logs > OpenSSH
+
 
 ## Apple UK Keyboard ISO
 
@@ -33,6 +34,15 @@ View logs from Event Viewer > Applications & Services Logs > OpenSSH
 
 Use English US Keyboard for SHIFT+3 (#) key
 Win + <- or ->: Snap window to left or right of screen
+F11 - Full screen 
+Win + up - Full screen
+CTRL + Win + < or > - Switch Virtual Desktop
+ALT + Tab - Show all Virtual Desktops 
+
+## Terminal
+
+CTRL + TAB - Next Tab
+CTRL + SHIFT + TAB - Previous Tab
 
 ## WSL
 
