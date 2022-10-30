@@ -105,3 +105,51 @@ There are also expansions for removing prefixes and suffixes. The form `${VAR#pa
 ```
 
 outputs the file base and extension respectively ("data" and "txt")
+
+## Bash tips
+
+From https://sharats.me/posts/shell-script-best-practices/
+
+- Use `shellcheck`
+- `set -o nounset` to make the script fail when accessing an unset variable
+  - When you want to access a variable that may or may not have been set, use `"${VARNAME-}"` instead of `"$VARNAME"`
+- `set -o pipefail` to ensure that a pipeline command is treated as failed, even if one command in the pipeline fails
+- `set -o xtrace` with a check on $TRACE env variable.
+  - Add `if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi`.
+  - Debug scripts with `TRACE=1 ./script.sh` instead of `./script.sh`.
+- Use `[[ ]]` for conditions in `if` / `while` statements, instead of `[ ]` or test.
+- Always quote variable accesses with double-quotes.
+- Use local variables in functions.
+- Print error messages to `stderr`:`. `echo 'Something unexpected happened' >&2`
+- Change to the script’s directory close to the start of the script.
+  - Use `cd "$(dirname "$0")"`
+  
+Template:
+
+```sh
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+    echo 'Usage: ./script.sh arg-one arg-two
+
+This is an awesome bash script to make your life better.
+
+'
+    exit
+fi
+
+cd "$(dirname "$0")"
+
+main() {
+    echo do awesome stuff
+}
+
+main "$@"
+```
