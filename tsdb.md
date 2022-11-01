@@ -19,9 +19,52 @@ See [https://grafana.com/docs/grafana/latest/basics/timeseries/]
 - Heritage: Soundcloud engineers (ex-Google)
 - Pull-based HTTP request to collectors
 - Built-in service discovery
-- Alerts 
-- Stores float64 metric_name{ Key, Value } pairs
-- PromQL
+- Alerts
+- Stores float64 metric_name{ Key, Value } pairs, easier to extend when adding new datacentre etc.
+- Automatically generated labels and time series: `job`, `instance`
+
+### PromQL
+
+Good reference is: [https://valyala.medium.com/promql-tutorial-for-beginners-9ab455142085]
+
+- Counters
+- Gauges
+- Timers/Complex Types
+  - Histograms
+  - Summaries
+  - Scalars
+  - Instant Vector: maps to single datapoint
+    - Can be charted
+    - Can do arthmetric
+    - Convert to Range Vector by appending a duration
+  - Range Vector: maps to sliding window e.g. `rate(http_requests_total[5m]`
+    - Mostly used for graphs
+    - Cannot be charted
+    - Can do arthmetric
+- Filter multiple time series using `metric_name{<label selector>}`, e.g.`node_network_receive_bytes_total{device="eth1"}`
+  - Selectors:
+    - `=`
+    - `!=`
+    - `=~` (regexp, handy for *OR*s `{device=~"eth1|lo"}`)
+    - `!~` (regexp, e.g. `{device!~"eth.+"}`)
+    - ',' for *AND* e.g. `node_network_receive_bytes_total{instance="node42:9100", device=~"eth.+"}`
+- Rates (e.g. `rate(pings_time_seconds_total[5m])/rate(pings_count_total[5m])`)
+  - Smaller delta increases noise, bigger delta smooths graph
+  - `rate()` works for gauges, not counters!
+- Operators: [https://prometheus.io/docs/prometheus/latest/querying/operators/]  
+  - Aggregations:
+    - `sum`, `min`, `max`, `avg`, `stddev`, `stdvar`, `count`, `quartile`
+  - Grouping
+    - `BY`, e.g. `sum(rate(node_network_receive_bytes_total[5m])) by (instance)`
+    - `WITHOUT`
+- Vector Matching
+  - One to One: `<vector expr> <bin-op> ignoring(<label list>) <vector expr>`
+  - Many to One: complex!
+
+### Alerting
+
+- Use alertmanager to manage duplicates when you have HA Prometheus instances.
+- Active alerts haven't lasted `for xm` - they then become firing 
 
 ## Collectors
 
@@ -67,6 +110,8 @@ timestamp:     1465839830100400200
 - Bulk reads, single writes
 - Most recent first
 - High cardinality (many values for an attribute)
+  - Active series is the one receiveing data
+  - Churn rate is how often time series become active/inactive (e.g. changing `pod_name` in k8s). Use `rate(prometheus_tsdb_head_series_created_total[5m])` to check
 
 Delta encoding
 Varint to reduce space
