@@ -21,6 +21,7 @@ CMD+P           Open File, then '?' to see suggested commands
 
 ```sh
 
+SHIFT+CMD+N     New Window
 SHIFT+CMD+[     Left Editor
 SHIFT+CMD+]     Right Editor
 CMD+W           Switch Window
@@ -30,6 +31,8 @@ CTRL+CMD+F      Fullscreen mode
 
 SHIFT+CMD+E     Explorer Window
 CMD+B           Toggle sidebar
+CMD+J           Toggle Debug/Terminal (more useful then CMD+U)
+
 CTRL+`          Show Terminal Window
 CTRL+^          Toggle maximized Terminal
 SHFT+CMD+[      Previous Terminal
@@ -71,6 +74,13 @@ ALT+CMD+]
 
 ```
 
+## Debug
+
+```sh
+CMD+F1          Focus on debug console (for hotkey stepping)
+
+
+```
 Go: Generate Interface Stubs
 
 ## Search

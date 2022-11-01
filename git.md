@@ -29,9 +29,20 @@ git checkout master
 git merge origin/master --ff-only
 ```
 
+Clean local modified files but untracked files are untouched:
+```
+git checkout <branch> -- <file-path>
+git checkout  -- .
+```
 ## Less common operations
 
 Diff branch: `git diff master..the_local_branch`
+
+Make local branch same as remote: `git reset --hard origin/<branch>`
+Move local `main` to origin `main`: `git reset --hard origin/main`
+Move branch to align with another branch: `git branch -f <branch>`
+Move branch (e.g. need to not be on branch): `git branch -f <branch> <commit_id>`
+Move HEAD to a branch tip: `git reset --hard <branch>`
 
 Remove a local branch: `git branch -d the_local_branch`
 
@@ -48,10 +59,6 @@ Move base of branch from one commit to another: `git rebase --onto newBase oldBa
 Clean ignored files (probably excessive): `git clean -dfX`
 
 Clean untracked directories & files: `git clean -dfx` / dry-run `git clean -ndfx`
-
-Move tag (e.g. need to not be on branch): `git branch -f <tag> <commit_id>`
-
-Move HEAD to a branch tip: `git reset --hard <branch>`
 
 Save where I am before I do complicated stuff: `git checkout -b backup`
 
@@ -82,13 +89,15 @@ Force move tip of branch: `git branch -f <branch> <commit-sha>`
 - index/staging area = `git add/rm` commands "stages" files in the index (represented in `.git/`)
 - repository = `git commit` command moves staged file changes into repository
 
-`reset` - hard, soft or mixed (default)
-´
+`reset` - hard, soft or mixed (default), updates *index* moving branch to point that `HEAD` is pointing to
+
 `git reset --hard 1.1` - file contents same as repo
 
 `git reset 1.1` - resets the index but not the working tree and reports what has not been updated
 
 `git reset --soft 1.1` - does not touch the index file or the working tree at all, leaves all your changed files "Changes to be committed", as git status would put it
+
+`git checkout` - updates *working tree*, moving `HEAD` if new branch created (otherwise creates detached head)
 
 `reflog` super-useful when you've made a mistake, logs all that you've done on a branch
 
@@ -124,11 +133,29 @@ Fetching a remote branch:
 
 ## `@` notation
 
-- `@{17}` (HEAD as it was 17 actions ago)
+- `@{17}` (HEAD as it was 17 ´actions ago)
 - `some-branch@{'Aug 22'}` (some-branch as it was last August 22)
 - `git show dev@{'Aug 22'}:path/to/some/file.txt` - Print out that file, as it was on dev, as dev was on August 22
 
 `git reset --hard <SHA>`
+
+## Aliases
+
+```sh
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+```
+
+## Misc
+
+- `Detached HEAD` mode: `HEAD` normally points to branch, but in `detached head` mode it just points to a commit
+- `<tree-ish>` = pointer to Git directory tree (not object!), e.g.: `master:foo`, `main~3`, `<sha1>`
+- `pathspec` limits to certain files/directories `*.js`, `.`, ` */*.c`
+- `tags` points to a specific tag object *or* commit object, lives in `refs/tags/`. Not updated by commits.
+- `branches` points to a specific commit object, lives in `refs/heads/`.  Updated by a commit.
+- `HEAD` must point to branch or a commit object
 
 ## Even Deeper
 
