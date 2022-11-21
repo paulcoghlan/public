@@ -66,6 +66,48 @@ Good reference is: [https://valyala.medium.com/promql-tutorial-for-beginners-9ab
 - Use alertmanager to manage duplicates when you have HA Prometheus instances.
 - Active alerts haven't lasted `for xm` - they then become firing 
 
+## Cortex
+
+Cortex is a time-series store built on Prometheus
+
+- Horizontally scalable
+- Highly Available
+- Durable, long-term storage
+- Multi-tenant
+
+- Essentially a de-dupe, compression engine - uses 3rd party long-term storage (S3 etc).
+- Handles clustering automagically?
+- Ingester
+- NoSQL Index
+- Blob store
+
+PromQL engine does sums
+
+- Cortex writes 3 replicas of each chunk
+- Chunks need merging/deduping
+
+## Loki
+
+- Promtail uses same labels as Prometheus for consistency
+- Use BoltDB locally
+
+## Jsonnet/Tanka
+
+- Jsonnet needed as YAML doesn't work for dynamic domain names, environments, etc in k8s
+- Introduces functions, deep merging +,
+- Jsonnet stopped being developed, so Grafana took best bits and rebuilt it into [Tanka](https://github.com/grafana/tanka)
+
+- Workflow: `tk show`, `tk diff`, `tk apply`
+- Simplified abstractions: just Jsonnet and environments
+- Jsonnet --tanka--> kubectl
+- Adds:
+  - Context discovery: confirm cluster
+  - Enhanced diff: server side
+
+- Jsonnet Bundler: [https://github.com/jsonnet-bundler/jsonnet-bundler] - packager (similar to npm)
+- Starts with `main.jsonnet` (same as main.go)
+- Select cluster with `spec.json`
+
 ## Collectors
 
 - collectd [https://collectd.org/]

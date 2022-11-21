@@ -17,6 +17,8 @@ CTRL+-          Go back
 ALT+R           See Recent Projects
 CMD+P           Open File, then '?' to see suggested commands
 
+CMD+,           Open User Settings JSON
+
 ## Windows
 
 ```sh
@@ -52,11 +54,14 @@ CMD+L           Select line
 SHIFT+CMD+L     Select all occurances of current selection to edit at once
 ALT+UP          Move line up
 ALT+DOWN        Move line down
+SHIFT+ALT+UP/DOWN Copy line up/down
 
 CMD+[           Indent less
 CMD+]           Indent more
 SHFT+CTRL+CMD+<- Reduce selection
 SHFT+CTRL+CMD+-> Expand selection
+
+F2              Rename symbol
 
 CMD+\           Split editor 
 CMD+'           Move to next split view
@@ -79,6 +84,8 @@ ALT+CMD+]
 ```sh
 CMD+F1          Focus on debug console (for hotkey stepping)
 
+CMD+; C         Re-run tests at cursor
+CMD+; F         Re-run tests in file
 
 ```
 Go: Generate Interface Stubs
@@ -97,9 +104,13 @@ SHIFT+CMD+M     See Errors/Warnings, followed by F8/SHIFT+F8 to navigate
 gd - jump to definition.
 gh - equivalent to hovering your mouse over wherever the cursor is. Handy for seeing types and error messages without reaching for the mouse!
 
+CMD+D or gb - multi-cursor mode for making multiple edits at once.  Repeat CMD+D for each selection (or use rename symbol (F2))
+
 /  - search in file
 n  - next search result
 N  - previous search result
+
+Set `"vim.useCtrlKeys": false` to avoid clash with Windows CTRL+V
 
 ## markdown
 

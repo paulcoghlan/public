@@ -18,11 +18,11 @@ Use to set default distro:
 
 View logs from Event Viewer > Applications & Services Logs > OpenSSH
 
-
 ## Apple UK Keyboard ISO
 
 1. Sharp Keys to swap ` and \ keys
-2. Power Toys for CTRL+C/CTRL+V to CMD+C/CMD+V mapping
+2. ~Power Toys for CTRL+C/CTRL+V to CMD+C/CMD+V mapping~ too much hassle as CMD+C/V combinations get
+swallowed by apps
 3. US layout to get # keys
 
 ## Docker/Ubuntu Installation
