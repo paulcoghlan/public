@@ -61,6 +61,7 @@ dd - delete line
 d$ - delete to end of line
 :1,.d - delete from start of file to current line
 :.,$d - delete from current line to end of file
+:4,7d - delete from line 4 to 7
 dG - delete to end of file
 ```
 

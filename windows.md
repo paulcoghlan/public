@@ -63,3 +63,10 @@ export BW_SESSION="<somekey>"
 
 bw list items | jq '.'
 ```
+
+## Clonezilla
+
+- Install [Clonezilla live](https://clonezilla.org/clonezilla-live.php) on USB
+- Follow ["Disk to disk clone"](https://clonezilla.org/clonezilla-live-doc.php) but use 1st option (default settings)
+- Copy "disk_to_local_disk"
+- Use *Advanced Install* and select `-k1` option to copy to larger target disk

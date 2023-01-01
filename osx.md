@@ -206,3 +206,10 @@ Select Blackhole 2ch
 ## Github
 
 CMD+K - Command Palette
+
+## FZF
+
+```sh
+brew install fzf
+make up | fzf --tac --height 100% --no-sort --ansi
+```

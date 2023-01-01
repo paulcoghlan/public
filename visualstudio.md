@@ -66,6 +66,10 @@ F2              Rename symbol
 CMD+\           Split editor 
 CMD+'           Move to next split view
 
+or:
+ALT+CMD+1       Single window
+ALT+CMD+2       Two windows
+
 CMD+W           Close Editor
 ```
 
