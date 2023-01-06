@@ -753,7 +753,7 @@ Variadic funcions use `...`, eg. `func sum(vals ...int) int {`
 
 Use for unexpected errors.
 Runtime error to abort program.
-All deferred functions called in reverse order.
+Handle with `defer` - all deferred functions called in reverse order
 
 ## Performance
 
@@ -797,6 +797,17 @@ b4, err := r4.Peek(5)
     for tItr := 0; tItr < int(t); tItr++ {
         line := readLine(reader)
         input := strings.Split(strings.TrimSpace(line)), " ")
+```
+
+### Read HTTP (limited) response
+
+```go
+    httpResponse, err := w.client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer httpResponse.Body.Close()
+    data, err := io.ReadAll(io.LimitReader(httpResponse.Body, 1*1024*1024))
 ```
 
 ### Write file
