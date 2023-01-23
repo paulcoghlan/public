@@ -11,7 +11,7 @@ Go commands run in Module-aware mode or `GOPATH` mode
 
 ### Vendoring
 
-Vendoring is used to allow interoperation with *older* versions of Go, or to ensure that all files used for a build are stored in a single file tree.
+Vendoring is used to allow interoperation with *older* versions of Go, or to ensure that all files used for a build are stored in a single file tree. Potential security benefits as you don't pull in a complete module, just the files that you use.
 
 `go mod vendor` command creates a `vendor` directory containing copies of all packages needed to build and test packages in the main module.
 
@@ -534,6 +534,39 @@ Prefix a function or method call with the go keyword to run the call in a new go
         // do stuff in new goroutine
     }(<optional args>)
 ```  
+
+### Goroutines arguments
+
+Note that the example below prints out `ccc` because the same instance of `v` is used:
+
+```go
+    values := []string{"a", "b", "c"} 
+    for _, v := range values {
+        go func() {
+            fmt.Println(v)
+            done <- true
+        }()
+    }
+```
+
+Two solutions - create a new instance of `v` on each iteration or pass `v` as argument to closure (much better IMHO)
+
+```go
+    for _, v := range values {
+        v := v // create a new 'v'.
+        go func() {
+            fmt.Println(v)
+            done <- true
+        }()
+    }
+
+    for _, v := range values {
+        go func(u string) {
+            fmt.Println(u)
+            done <- true
+        }(v)
+    }
+```
 
 ## Channels
 
