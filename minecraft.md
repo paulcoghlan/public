@@ -22,3 +22,4 @@ Need to ensure VM has 19132/UDP open.
 
 Mods are called Add-ons for Bedrock version.  See below for install instructions:
 https://github.com/itzg/docker-minecraft-bedrock-server#mods-addons
+
