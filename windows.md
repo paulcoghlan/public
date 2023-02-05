@@ -4,8 +4,15 @@
 
 Show hidden files and file extensions in Windows Explorer
 Right-click sidebar -> Taskbar settings -> Disable Widgets, Search, Task View
+Admin Powershell:
+```
+winget uninstall "windows web experience pack"
+```
 
 ## SSH 
+
+Copy SSH key to `C:\Users\<user>\.ssh` so that you can use
+VSCode Remote Extension to SSH.
 
 Install from Apps > Optional Features
 `C:\ProgramData\ssh` is hidden but has SSH server config
@@ -24,6 +31,9 @@ View logs from Event Viewer > Applications & Services Logs > OpenSSH
 2. ~Power Toys for CTRL+C/CTRL+V to CMD+C/CMD+V mapping~ too much hassle as CMD+C/V combinations get
 swallowed by apps
 3. US layout to get # keys
+4. Remove XBox Game Bar to avoid annoying shortcuts using Admin PowerShell: `Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage`
+5. In VSCode Windows and Mac have their own shortcut settings so you can set them independently
+
 
 ## Docker/Ubuntu Installation
 
