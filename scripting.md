@@ -101,6 +101,9 @@ Find all of the 'FIX ME' s:
 
 ### Checking files/directories
 
+List files by size:
+`ls -S -l -h`
+
 Find lines of code:
 `find . •name ”*.java” -print | xargs wc -l`
 
