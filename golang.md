@@ -325,7 +325,11 @@ init is called after all the variable declarations in the package have evaluated
 ## Pointer vs. Value methods
 
 - Value methods can be invoked on pointers and values, but *pointer methods* can *only* be invoked on *pointers*.
-- Convention is that if one method is pointer reciever, all should be pointer recievers.
+- Convention is that if one method is pointer receiver, all should be pointer receivers.
+- Use values if:
+  - Receiver is basic type (`int`, `string`)
+  - Receiver is small array or value type with non mutable fields (e.g. `time.Time`)
+  - We don't want to mutate calling variable in method or a value type wui
 
 ### Copying Instances of type T
 
@@ -444,6 +448,26 @@ type Y struct { x X }
 ```
 
 An expression may be assigned to an interface only if its type satisfies the interface.
+
+### Type Aliases (extending structs from another package)
+
+You can't define new methods on a non-local type (see [https://pkg.go.dev/golang.org/x/tools/internal/typesinternal#InvalidRecv]) so instead you `alias` the type and define new methods on that.
+
+e.g.:
+
+```go
+
+type MyHttpRequest http.Request
+
+func (r *MyHttpRequest) SignRequest(secret string, timestamp string) error {
+    ...
+}
+
+myHttp := MyHttpRequest(*req)
+```
+
+
+
 
 ### Mocking Interfaces For Unit Tests
 
@@ -774,7 +798,14 @@ func (e PathError) Error() string {
 }
 ```
 
-Because error messages are frequently chained together, message strings should not be capitalized and newlines should be avoided.
+- Error messages are frequently chained together, so message strings should not be capitalized and newlines should be avoided
+- Expected errors should be designed as error values (sentinel errors): `var ErrFoo = errors.New("foo")`
+  so you can check against them
+- Unexpected errors should be designed as error types: `type BarError struct { ... }`, with `BarError` implementing the error interface
+- Wrap errors with `fmt.Errorf("some error %w", err)`
+  - Adds additional context to an error
+  - Marking an error as a specific error
+  - Use `errors.Is` instead of `==` to check wrapped errors, it can look at nested errors
 
 ## Functions
 

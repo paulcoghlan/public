@@ -1,6 +1,6 @@
 # Visual Studio
 
-See [https://code.visualstudio.com/docs/getstarted/keybindings]
+ [https://code.visualstudio.com/docs/getstarted/keybindings]
 
 ## Meta
 
@@ -101,7 +101,7 @@ SHIFT+CMD+F     Search in Files
 F4              Navigate search results 
 ```
 
-SHIFT+CMD+M     See Errors/Warnings, followed by F8/SHIFT+F8 to navigate
+SHIFT+CMD+M      Errors/Warnings, followed by F8/SHIFT+F8 to navigate
 
 ## VIM Plugin
 
@@ -127,7 +127,10 @@ or:
 n  - next search result
 N  - previous search result
 
-~Set `"vim.useCtrlKeys": false` to avoid clash with Windows CTRL+V~
+~Set `"vim.useCtrlKeys": false` to avoid clash with Windows CTRL+V~ - don't do this,
+breaks visual block mode
+
+- Use system clipboard: `"vim.useSystemClipboard": true`
 
 ## markdown
 
