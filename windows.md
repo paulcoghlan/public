@@ -9,6 +9,22 @@ Admin Powershell:
 winget uninstall "windows web experience pack"
 ```
 
+## Recovery Drive
+
+0. Create System Restore before upgrades
+
+1. Boot into BIOS
+2. Select Boot menu and override with USB drive
+3. Choose 'Repair Windows' when USB booted
+4. Select 'Troubleshoot' and 'Advanced'
+5. Choose 'Uninstall Quality Update'
+
+## System Restore Point
+
+Control Panel > Recovery
+
+'Create a restore point right now'
+
 ## SSH 
 
 Copy SSH key to `C:\Users\<user>\.ssh` so that you can use
@@ -62,6 +78,15 @@ List distros:
 - `wsl --set-default <distro name>`
 - `wsl --unregister <distro name>`
 
+Set default user:
+
+Edit  `/etc/wsl.conf':
+
+```
+[user]
+default=username
+```
+
 ## Bitwarden
 
 Use Bitwarden CLI from Ubuntu:
@@ -80,3 +105,16 @@ bw list items | jq '.'
 - Follow ["Disk to disk clone"](https://clonezilla.org/clonezilla-live-doc.php) but use 1st option (default settings)
 - Copy "disk_to_local_disk"
 - Use *Advanced Install* and select `-k1` option to copy to larger target disk
+
+## Capsicain (not used!)
+
+Low-level keyboard mapper.
+See: https://github.com/cajhin/capsicain/issues/5
+Edit c:\Users\paulc\capsican\capsican.ini
+run c:\Users\paulc\capsican\capsican.exe
+
+ESC-h - help
+ESC-x - stop
+ESC-1 - Apple Mac Alt-Win swap
+
+https://github.com/cajhin/capsicain/wiki/Basics
