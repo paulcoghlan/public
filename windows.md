@@ -118,3 +118,9 @@ ESC-x - stop
 ESC-1 - Apple Mac Alt-Win swap
 
 https://github.com/cajhin/capsicain/wiki/Basics
+
+## Tools
+
+Install full-fat windows stuff:
+GCloud: https://cloud.google.com/sdk/docs/install
+Git: https://gitforwindows.org/
