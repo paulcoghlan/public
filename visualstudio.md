@@ -108,14 +108,18 @@ SHIFT+CMD+M      Errors/Warnings, followed by F8/SHIFT+F8 to navigate
 gd - jump to definition.
 gh - equivalent to hovering your mouse over wherever the cursor is. Handy for seeing types and error messages without reaching for the mouse!
 
-CMD+D or gb - multi-cursor mode for making multiple edits at once.  Repeat CMD+D for each selection (or use rename symbol (F2)), then `d/p/i` to delete/paste/insert
+### Visual Mode - Multi-cursor
 
-### Visual Mode
-
-- CTRL+V enter visual block mode
+- V to enter visual mode
+- `vi"` /`vi'`/ `vi{` to select stuff
+- `y` to copy
+- `CTRL+V` or `CMD+D` to enter visual block mode
 - Move Up/Down to select the columns of text in the lines you want to comment
-- Then hit Shift+i and type the text you want to insert
-- Then hit Esc and the inserted text will appear on every line
+	- Hit `Shift+i` and type the text you want to insert
+	- Hit `A` to append
+	- Hit `c` to change
+	- Hit `d` to delete
+- Then hit `Esc` and the inserted text will appear on every line
 
 or:
 
@@ -123,7 +127,7 @@ or:
 - Move Up/Down/Left/Right to select block to delete
 - Press x to delete
 
-/  - search in file
+/<string><ENTER>  - search in file
 n  - next search result
 N  - previous search result
 

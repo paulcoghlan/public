@@ -941,6 +941,17 @@ literal percent sign (no operand)
 - The convention is to add a single-sentence comment ending with '.', starting with the name of the exported element
 - Packages should start the comment with a `// Package <package-name>` comment
 
+### Build Constraints
+
+A build constraint, also known as a build tag, is a condition under which a file should be included in the package. Build constraints are given by a line comment that begins `//go:build`, e.g. for `mage` files:
+
+```golang
+//go:build mage
+
+package main
+```
+
+
 ## Tips
 
 Read lines from stdin:
@@ -993,3 +1004,4 @@ Regexp Match:
 match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
     fmt.Println(match)
 ```
+

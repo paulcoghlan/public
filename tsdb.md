@@ -93,10 +93,70 @@ PromQL engine does sums
 
 ## Jsonnet/Tanka
 
+- Remember: everything is compiled to JSON!
 - Jsonnet needed as YAML doesn't work for dynamic domain names, environments, etc in k8s
-- Introduces functions, deep merging +,
-- Jsonnet stopped being developed, so Grafana took best bits and rebuilt it into [Tanka](https://github.com/grafana/tanka)
+- Introduces functions, deep merging with `+`
+- Visible objects have `:`
+- Hidden objects have `::`
+- `self` refers to the current object.
+- `$` refers to the outer-most object.
+- Debug using :````
+```
+error 'Printing' + std.toString(obj)
+```
 
+- Jsonnet stopped being developed, so Grafana took best bits and rebuilt it into [Tanka](https://github.com/grafana/tanka)
+- Good reference: https://jsonnet.org/ref/language.html
+
+- Root object in `main.jsonnet`:
+
+```
+{
+    "some_deployment": { /* ... */ },
+    "some_service": { /* ... */ }
+}
+```
+
+- Add key/value pairs like this:
+```
+{
+  _config:: {
+    key1: {
+      key2: value
+    }
+  }
+}
+```
+* Add constructor function like this:
+
+```
+{
+  // hidden k namespace for this library
+  k:: {
+    deployment: {
+      new(name, containers): {
+        apiVersion: "apps/v1",
+        kind: "Deployment",
+        metadata: {
+          name: name,
+```
+
+```
+(import "kubernetes.libsonnet") +
+...
+{
+  grafana: {
+    deployment: $.k.deployment.new("grafana", [{
+      image: 'grafana/grafana',
+      name: 'grafana',
+      ports: [{
+          containerPort: 3000,
+          name: 'ui',
+      }],
+    }]),
+```
+
+- 
 - Workflow: `tk show`, `tk diff`, `tk apply`
 - Simplified abstractions: just Jsonnet and environments
 - Jsonnet --tanka--> kubectl
@@ -104,7 +164,6 @@ PromQL engine does sums
   - Context discovery: confirm cluster
   - Enhanced diff: server side
 
-- Jsonnet Bundler: [https://github.com/jsonnet-bundler/jsonnet-bundler] - packager (similar to npm)
 - Starts with `main.jsonnet` (same as main.go)
 - Select cluster with `spec.json`
 
@@ -151,9 +210,10 @@ timestamp:     1465839830100400200
 - Ordered by time
 - Bulk reads, single writes
 - Most recent first
-- High cardinality (many values for an attribute)
+- High cardinality (many unique combinations of all labels)
   - Active series is the one receiveing data
   - Churn rate is how often time series become active/inactive (e.g. changing `pod_name` in k8s). Use `rate(prometheus_tsdb_head_series_created_total[5m])` to check
+  - 
 
 Delta encoding
 Varint to reduce space

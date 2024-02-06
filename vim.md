@@ -11,27 +11,37 @@ CTRL+r - redo
 ```sh
 /<string> - search forward
 ?<string> - search backward
+
 Search and Replace:
-Every occurrence in file:              :%s/OLD/NEW/g
+Every occurrence in file:              :%s/OLD/NEW/gc
+c - confirm
+g - global
+
 n - repeat last search
+N - repeat last search backwards
 ```
 
 ## Movement
 
 ```sh
 0 - move to start of line
+^ - move to first non-blank char of line
 i  - insert at point
 A - to append to end of line
 HML - move to top, middle or bottom of screen
 hjkl - move L U D R
 $ - move to end of line
-wb - move forward/backward by word
-e - move to end of word
 
 1G - move to start of file
 G - move to end of file
-w - move forward by word
+w - move forward to start of word
+e - move forward to end of word
 b - move back by word
+
+f{char} - move to next occurance of {char}
+t<char> - move to before next occurence of char
+T<char> - move to before previous occurence of char
+
 cw - change to end of word
 c$ - change to end of line
 ciw - change word at current cursor position (more useful!)
@@ -39,23 +49,34 @@ ciw - change word at current cursor position (more useful!)
 { - move to start of paragraph/code-block
 } - move to end of paragraph/code-block
 
-t<char> - move to next occurence of char
-T<char> - move to previous occurence of char
-
 * - find all matches of word where cursor is landed
-# - find all matches of word where cursor is landed
+# - find all matches of word where cursor is landed backwards
 
 CTRL+E - scroll window down
 CTRL+Y - scroll window up
+
 CTRL+F - scroll down 1 page
 CTRL+B - scroll up 1 page
+
+CTRL+D - scroll down 1/2 page
+CTRL+U - scroll up 1/2 page
 ```
 
 ## Copy/Paste
 
 ```sh
-yiw - copy word at current cursor position
+yi\" - copy text inside double-quotes
+yiw  - copy word at current cursor position
+
 viwp - paste word at current cursor position
+
+vi\" - select text inside double-quotes
+vi\' - select text inside single-quote
+vi{  - select text inside curly block
+
+va\" - select text between double-quotes
+va\' - select text between single-quote
+va{  - select text between curly block
 
 dd - delete line
 d$ - delete to end of line
@@ -79,10 +100,15 @@ dG - delete to end of file
 ## Visual Mode
 
 ```sh
-v - visual mode - start selection - then use hjkl to move, y to copy or d to cut/delete, p to paste
+v - visual mode - start selection - then use hjkl to move, y to copy or d to cut/delete, p to paste. Enter new text, hit escape and the other lines will automatically be populated.
 CTRL+v - to select rectangular blocks!
+SHIFT+v - to select lines
 ```
 
+## Interactive Search and Replace Hack
+- **search** using `/` and go through the matches using `n`
+- **select** match using `gn` and then `s` to **substitute** the text 
+-  **repeat** by moving to next match and pressing `.`
 ## Registers
 
 Use " prefix to access registers

@@ -83,6 +83,8 @@ Cherry-pick: `git cherry-pick <commit-sha>`
 
 Force move tip of branch: `git branch -f <branch> <commit-sha>`
 
+Remove old refs: `git fetch -a --prune` 
+
 ## Digging deeper
 
 - working tree = what is on your SSD
@@ -175,6 +177,19 @@ Given `echo 'Hello, world!' > greeting.txt`:
 - 1st line is subject, without period
 - Imperative mood
 - Don't trigger Github (ie. `#1234` `@username`)
+
+## Amend Workflow
+
+- `git commit --amend -m "an updated commit message"`
+- Show files in a given commit: `git show --format= --name-only HEAD`
+
+## Signing Commits
+
+```
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/<keyname>.pub
+```
+
 
 ## Philosophy
 
