@@ -124,3 +124,13 @@ https://github.com/cajhin/capsicain/wiki/Basics
 Install full-fat windows stuff:
 GCloud: https://cloud.google.com/sdk/docs/install
 Git: https://gitforwindows.org/
+
+## Power management
+
+Run Powershell as admin to find devices causing wake and disable them:
+```
+Powercfg -devicequery wake_armed
+Intel(R) I211 Gigabit Network Connection
+
+Powercfg -devicedisablewake "Intel(R) I211 Gigabit Network Connection"
+```
