@@ -2,7 +2,7 @@
 
 ## Reinstall Windows
 Settings > Windows Update > Update History > Recovery > Reset PC > Keep Personal Files
-Reinstalls windows, doesn't delete anything
+Reinstalls windows, but doesn't delete anything from C: drive
 
 ## Windows Installation
 
@@ -44,16 +44,6 @@ Use to set default distro:
 `wsl --set-default DISTRO`
 
 View logs from Event Viewer > Applications & Services Logs > OpenSSH
-
-## Apple UK Keyboard ISO
-
-1. Sharp Keys to swap ` and \ keys
-2. ~Power Toys for CTRL+C/CTRL+V to CMD+C/CMD+V mapping~ too much hassle as CMD+C/V combinations get
-swallowed by apps
-3. US layout to get # keys
-4. Remove XBox Game Bar to avoid annoying shortcuts using Admin PowerShell: `Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage`
-5. In VSCode Windows and Mac have their own shortcut settings so you can set them independently
-
 
 ## Docker/Ubuntu Installation
 
@@ -110,19 +100,6 @@ bw list items | jq '.'
 - Copy "disk_to_local_disk"
 - Use *Advanced Install* and select `-k1` option to copy to larger target disk
 
-## Capsicain (not used!)
-
-Low-level keyboard mapper.
-See: https://github.com/cajhin/capsicain/issues/5
-Edit c:\Users\paulc\capsican\capsican.ini
-run c:\Users\paulc\capsican\capsican.exe
-
-ESC-h - help
-ESC-x - stop
-ESC-1 - Apple Mac Alt-Win swap
-
-https://github.com/cajhin/capsicain/wiki/Basics
-
 ## Tools
 
 Install full-fat windows stuff:
@@ -139,3 +116,28 @@ Intel(R) I211 Gigabit Network Connection
 
 Powercfg -devicedisablewake "Intel(R) I211 Gigabit Network Connection"
 ```
+
+## Archive
+
+### Capsicain (not used!)
+
+Low-level keyboard mapper.
+See: https://github.com/cajhin/capsicain/issues/5
+Edit c:\Users\paulc\capsican\capsican.ini
+run c:\Users\paulc\capsican\capsican.exe
+
+ESC-h - help
+ESC-x - stop
+ESC-1 - Apple Mac Alt-Win swap
+
+https://github.com/cajhin/capsicain/wiki/Basics
+
+### Apple UK Keyboard ISO
+
+1. Sharp Keys to swap ` and \ keys
+2. ~Power Toys for CTRL+C/CTRL+V to CMD+C/CMD+V mapping~ too much hassle as CMD+C/V combinations get
+swallowed by apps
+3. US layout to get # keys
+4. Remove XBox Game Bar to avoid annoying shortcuts using Admin PowerShell: `Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage`
+5. In VSCode Windows and Mac have their own shortcut settings so you can set them independently
+
