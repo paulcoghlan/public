@@ -102,10 +102,12 @@ bw list items | jq '.'
 
 ## Tools
 
+Winget Packages: https://winget.run/
 Install full-fat windows stuff:
 GCloud: https://cloud.google.com/sdk/docs/install
 Git: https://gitforwindows.org/
-Rclone: 
+Rclone: winget install -e --id Rclone.Rclone
+Hugo:
 
 ## Power management
 
