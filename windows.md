@@ -1,5 +1,9 @@
 # Windows 11
 
+## Reinstall Windows
+Settings > Windows Update > Update History > Recovery > Reset PC > Keep Personal Files
+Reinstalls windows, doesn't delete anything
+
 ## Windows Installation
 
 Show hidden files and file extensions in Windows Explorer
