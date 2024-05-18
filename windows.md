@@ -124,6 +124,7 @@ https://github.com/cajhin/capsicain/wiki/Basics
 Install full-fat windows stuff:
 GCloud: https://cloud.google.com/sdk/docs/install
 Git: https://gitforwindows.org/
+Rclone: 
 
 ## Power management
 
