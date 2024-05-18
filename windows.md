@@ -107,7 +107,7 @@ Install full-fat windows stuff:
 GCloud: https://cloud.google.com/sdk/docs/install
 Git: https://gitforwindows.org/
 Rclone: winget install -e --id Rclone.Rclone
-Hugo:
+Hugo: winget install -e --id Hugo.Hugo.Extended
 
 ## Power management
 
