@@ -2,6 +2,10 @@
 
 See [https://jwiegley.github.io/git-from-the-bottom-up/]
 
+
+## Windows Auth
+
+`git remote set-url origin https://paulcoghlan:<GH_PAT>@github.com/paulcoghlan/hugo-theme-hello-friend.git`
 ## Common operations
 
 New branch: `git checkout -b <branch-name>`
