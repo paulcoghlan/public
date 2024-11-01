@@ -41,6 +41,7 @@ git checkout  -- .
 ## Less common operations
 
 Diff branch: `git diff master..the_local_branch`
+Get remote branch from origin: `git checkout --track origin/<origin-branch>`
 
 Make local branch same as remote: `git reset --hard origin/<branch>`
 Move local `main` to origin `main`: `git reset --hard origin/main`
@@ -64,6 +65,13 @@ Clean ignored files (probably excessive): `git clean -dfX`
 
 Clean untracked directories & files: `git clean -dfx` / dry-run `git clean -ndfx`
 
+Cleanup local repo (busy remotes!): ````
+```sh
+git gc --prune=now
+git fetch --prune
+```
+
+```
 Save where I am before I do complicated stuff: `git checkout -b backup`
 
 Remove files from a commit:

@@ -99,9 +99,11 @@ Go: Generate Interface Stubs
 ```sh
 SHIFT+CMD+F     Search in Files
 F4              Navigate search results 
+SHIFT+CMD+M     Errors/Warnings, followed by F8/SHIFT+F8 to navigate
+
+CMD+D           Multi-cursor: add to selection (see https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db)
 ```
 
-SHIFT+CMD+M      Errors/Warnings, followed by F8/SHIFT+F8 to navigate
 
 ## VIM Plugin
 

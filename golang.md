@@ -952,6 +952,14 @@ package main
 ```
 
 
+## Static Linking
+
+Go wants to statically link when it can.
+Use `CGO_ENABLED=0` to disable C-library versions of `net` and `os/user`. https://pkg.go.dev/cmd/cgo. This means all of the packages are included in the binary, fewer hassles with cross-compiling and linking to dynamic libraries for different platforms.
+
+```
+CGO_ENABLED=0 go build main.go
+```
 ## Tips
 
 Read lines from stdin:

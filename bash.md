@@ -11,7 +11,7 @@
 - Loop over files:
 `for f in <something>; do <script.sh> $f; done`
 
-- Loop over lines in `while read LINE ; do command $LINE; done`
+	- Loop over lines in `while read LINE ; do command $LINE; done`
 - Loop over range:
 
 ```sh

@@ -34,13 +34,9 @@ $ - move to end of line
 
 1G - move to start of file
 G - move to end of file
-w - move forward to start of word
+w - move forward to start of word (W means word includes punctuation)
 e - move forward to end of word
-b - move back by word
-
-f{char} - move to next occurance of {char}
-t<char> - move to before next occurence of char
-T<char> - move to before previous occurence of char
+b - move back by word (B means word includes punctuation)
 
 cw - change to end of word
 c$ - change to end of line
@@ -86,6 +82,30 @@ d$ - delete to end of line
 dG - delete to end of file
 ```
 
+## Verb + Modifier + Text Object
+```
+Verbs:
+d - delete
+y - yank
+p - put
+c - change
+
+Modifier:
+i - inside
+a - around
+
+Objects:
+w - forward
+b - backwards a word
+e - end of a word
+{ - curly block
+( - parenthesis
+
+e.g.:
+di( - delete everything in brackets 
+```
+
+
 ## Files
 
 ```sh
@@ -101,15 +121,24 @@ dG - delete to end of file
 
 ```sh
 v - visual mode - start selection - then use hjkl to move, y to copy or d to cut/delete, p to paste. Enter new text, hit escape and the other lines will automatically be populated.
-CTRL+v - to select rectangular blocks!
+SHIFT+i - to put cursors at begining of selections
+<       - to decrease indent
+>>      - to increase indentt
+CTRL+v  - to select rectangular blocks!
 SHIFT+v - to select lines
 ```
 
 ## Interactive Search and Replace Hack
-- **search** using `/` and go through the matches using `n`
-- **select** match using `gn` and then `s` to **substitute** the text 
--  **repeat** by moving to next match and pressing `.`
-## Registers
+```
+- search using `/` and go through the matches using `n`
+- select match using `gn` and then:
+	- `s` to **substitute** the text 
+	- repeat by moving to next match and pressing `.`
+- or use `cgn`/`dgn` to change/delete and move through matches:
+	- `.` to repeat
+	- `n` to move to next one
+```
+- ## Registers
 
 Use " prefix to access registers
 "" is the unnamed register you use with yank/paste
